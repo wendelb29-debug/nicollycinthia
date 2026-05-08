@@ -29,7 +29,10 @@ function LoginPage() {
 
   useEffect(() => {
     if (!loading && session && role) {
-      const target = role === "admin" ? "/admin" : role === "professional" ? "/profissional" : "/cliente";
+      const target =
+        role === "admin" ? "/admin/dashboard"
+        : role === "professional" ? "/profissional/agenda"
+        : "/cliente/dashboard";
       navigate({ to: target });
     }
   }, [session, role, loading, navigate]);

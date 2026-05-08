@@ -45,7 +45,7 @@ function SignupPage() {
       return;
     }
     toast.success("Cadastro realizado. Bem-vinda ao clube!");
-    navigate({ to: "/cliente" });
+    navigate({ to: "/cliente/dashboard" });
   };
 
   return (
