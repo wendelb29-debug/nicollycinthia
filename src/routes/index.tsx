@@ -5,6 +5,7 @@ import heroImage from "@/assets/hero-marble.jpg";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { useScrollReveal } from "@/hooks/use-reveal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,6 +30,8 @@ interface Plan {
 
 function HomePage() {
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [scrollY, setScrollY] = useState(0);
+  useScrollReveal();
 
   useEffect(() => {
     supabase.from("plans").select("*").eq("active", true).order("price").then(({ data }) => {
@@ -36,22 +39,49 @@ function HomePage() {
     });
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrolled = scrollY > 40;
+
+  const headline = ["O", "clube", "mais"];
+  const headline2 = ["de", "cuidado", "feminino."];
+
   return (
     <div className="min-h-screen bg-background">
-      {/* NAV */}
-      <header className="absolute top-0 z-30 w-full">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-          <Logo />
+      {/* NAV — glassmorphism on scroll */}
+      <header
+        className={`fixed top-0 z-30 w-full transition-all duration-300 ${
+          scrolled
+            ? "border-b border-border/50 bg-background/75 shadow-soft backdrop-blur-xl"
+            : "bg-transparent"
+        }`}
+      >
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between px-6 transition-all duration-300 ${
+            scrolled ? "py-3" : "py-5"
+          }`}
+        >
+          <div className={`transition-transform duration-300 ${scrolled ? "scale-95" : "scale-100"}`}>
+            <Logo size={scrolled ? 40 : 52} />
+          </div>
           <nav className="hidden items-center gap-8 text-sm text-foreground/80 md:flex">
-            <a href="#planos" className="transition-colors hover:text-gold">Planos</a>
-            <a href="#experiencia" className="transition-colors hover:text-gold">Experiência</a>
-            <a href="#depoimentos" className="transition-colors hover:text-gold">Depoimentos</a>
+            <a href="#planos" className="link-underline transition-colors hover:text-gold">Planos</a>
+            <a href="#experiencia" className="link-underline transition-colors hover:text-gold">Experiência</a>
+            <a href="#depoimentos" className="link-underline transition-colors hover:text-gold">Depoimentos</a>
           </nav>
           <div className="flex items-center gap-3">
             <Button asChild variant="ghost" className="hidden sm:inline-flex text-foreground hover:text-gold">
               <Link to="/login">Entrar</Link>
             </Button>
-            <Button asChild className="bg-gradient-gold text-white shadow-gold hover:opacity-95">
+            <Button
+              asChild
+              className="btn-shimmer text-white shadow-gold hover:opacity-95"
+              style={{ background: "linear-gradient(135deg, #C9A96E, #B8935A)" }}
+            >
               <Link to="/signup">Quero fazer parte</Link>
             </Button>
           </div>
@@ -64,7 +94,8 @@ function HomePage() {
           <img
             src={heroImage}
             alt="Mármore rosa e dourado com flores delicadas"
-            className="h-full w-full object-cover"
+            className="h-[120%] w-full object-cover will-change-transform"
+            style={{ transform: `translate3d(0, ${scrollY * 0.3}px, 0)` }}
             width={1920}
             height={1080}
           />
@@ -73,21 +104,40 @@ function HomePage() {
 
         <div className="mx-auto max-w-7xl px-6 pt-40 pb-24 md:pt-48 md:pb-32">
           <div className="max-w-3xl">
-            <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/60 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-gold backdrop-blur">
+            <span className="pulse-gold inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/60 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-gold backdrop-blur">
               <Crown className="h-3.5 w-3.5" />
               Apenas 20 vagas
             </span>
-            <h1 className="animate-fade-up-delay-1 mt-6 font-serif text-5xl leading-[1.05] text-foreground md:text-7xl lg:text-8xl">
-              O clube mais
-              <span className="block italic text-gradient-gold">exclusivo</span>
-              de cuidado feminino.
+
+            <h1 className="word-rise mt-6 font-serif text-5xl leading-[1.05] text-foreground md:text-7xl lg:text-8xl">
+              {headline.map((w, i) => (
+                <span key={i} style={{ animationDelay: `${i * 80}ms` }}>
+                  {w}{i < headline.length - 1 ? "\u00A0" : ""}
+                </span>
+              ))}
+              <br />
+              <span className="italic text-gradient-gold" style={{ display: "inline-block", opacity: 0, animation: `word-rise 0.7s var(--ease-luxe) ${headline.length * 80}ms forwards` }}>
+                exclusivo
+              </span>
+              <br />
+              {headline2.map((w, i) => (
+                <span key={i} style={{ animationDelay: `${(headline.length + 1 + i) * 80}ms` }}>
+                  {w}{i < headline2.length - 1 ? "\u00A0" : ""}
+                </span>
+              ))}
             </h1>
-            <p className="animate-fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+
+            <p className="animate-fade-up-delay-3 mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               Manicure e pedicure premium, no conforto da sua casa, com curadoria pessoal da{" "}
               <span className="font-serif italic text-foreground">Nicolly Cinthia</span>. Uma assinatura. Mãos impecáveis o ano inteiro.
             </p>
             <div className="animate-fade-up-delay-3 mt-10 flex flex-wrap gap-4">
-              <Button asChild size="lg" className="h-14 bg-gradient-gold px-8 text-base text-white shadow-gold hover:opacity-95">
+              <Button
+                asChild
+                size="lg"
+                className="btn-shimmer h-14 px-8 text-base text-white shadow-gold hover:opacity-95"
+                style={{ background: "linear-gradient(135deg, #C9A96E, #B8935A)" }}
+              >
                 <Link to="/signup">Quero fazer parte</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-14 border-foreground/20 bg-white/70 px-8 text-base backdrop-blur hover:bg-white">
@@ -106,7 +156,11 @@ function HomePage() {
             { icon: Heart, title: "Curadoria pessoal", text: "Esmaltes selecionados, adesivos exclusivos e técnicas refinadas." },
             { icon: Crown, title: "Vagas limitadas", text: "Apenas 20 assinantes ativas para garantir a melhor experiência." },
           ].map((item, i) => (
-            <div key={i} className="rounded-3xl border border-border/60 bg-card/80 p-8 shadow-soft backdrop-blur">
+            <div
+              key={i}
+              className="reveal rounded-3xl border border-border/60 bg-card/80 p-8 shadow-soft backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-luxe"
+              style={{ transitionDelay: `${i * 80}ms` }}
+            >
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-rose">
                 <item.icon className="h-5 w-5 text-foreground" />
               </div>
@@ -120,7 +174,7 @@ function HomePage() {
       {/* PLANOS */}
       <section id="planos" className="py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="reveal mx-auto max-w-2xl text-center">
             <span className="text-xs uppercase tracking-[0.4em] text-gold">Planos</span>
             <h2 className="mt-4 font-serif text-4xl md:text-5xl">Escolha o seu ritual</h2>
             <p className="mt-4 text-muted-foreground">
@@ -130,19 +184,24 @@ function HomePage() {
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {plans.map((plan, idx) => {
-              const featured = idx === 2;
+              const featured = plan.name?.toLowerCase().includes("mãos") && plan.name?.toLowerCase().includes("pés")
+                || idx === 2;
               return (
                 <div
                   key={plan.id}
-                  className={`group relative flex flex-col rounded-3xl border p-8 transition-all hover:-translate-y-1 ${
+                  className={`reveal group relative flex flex-col rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-1 ${
                     featured
-                      ? "border-gold/40 bg-gradient-luxe shadow-luxe"
+                      ? "border-gold/50 bg-gradient-luxe shadow-luxe"
                       : "border-border bg-card shadow-soft hover:shadow-luxe"
                   }`}
+                  style={{ transitionDelay: `${idx * 100}ms` }}
                 >
                   {featured && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-gold px-4 py-1 text-[10px] uppercase tracking-[0.3em] text-white shadow-gold">
-                      Mais escolhido
+                    <span
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.3em] text-white shadow-gold"
+                      style={{ background: "linear-gradient(135deg, #C9A96E, #B8935A)" }}
+                    >
+                      Mais popular
                     </span>
                   )}
                   <h3 className="font-serif text-3xl">{plan.name}</h3>
@@ -164,7 +223,11 @@ function HomePage() {
                       <Check className="h-4 w-4 text-gold" /> Atendimento em domicílio
                     </li>
                   </ul>
-                  <Button asChild className="mt-8 h-12 w-full bg-gradient-gold text-white shadow-gold hover:opacity-95">
+                  <Button
+                    asChild
+                    className="btn-shimmer mt-8 h-12 w-full text-white shadow-gold hover:opacity-95"
+                    style={{ background: "linear-gradient(135deg, #C9A96E, #B8935A)" }}
+                  >
                     <Link to="/signup">Assinar {plan.name}</Link>
                   </Button>
                 </div>
@@ -177,7 +240,7 @@ function HomePage() {
       {/* DEPOIMENTOS */}
       <section id="depoimentos" className="bg-gradient-rose/30 py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="reveal mx-auto max-w-2xl text-center">
             <span className="text-xs uppercase tracking-[0.4em] text-gold">Quem assina, ama</span>
             <h2 className="mt-4 font-serif text-4xl md:text-5xl">A experiência das nossas clientes</h2>
           </div>
@@ -186,11 +249,15 @@ function HomePage() {
               { name: "Marina C.", text: "É como ter um spa particular dentro de casa. Nicolly é uma joia rara — atenta, refinada, impecável." },
               { name: "Beatriz L.", text: "Mudou minha rotina. Hoje eu jamais saio com as unhas comuns. Vale cada centavo do plano." },
               { name: "Helena V.", text: "O atendimento é digno de hotel cinco estrelas. Detalhes, perfume, esmaltes lindíssimos. Apaixonada." },
-            ].map((t) => (
-              <div key={t.name} className="rounded-3xl border border-border/60 bg-card p-8 shadow-soft">
+            ].map((t, i) => (
+              <div
+                key={t.name}
+                className="reveal rounded-3xl border border-border/60 bg-card p-8 shadow-soft"
+                style={{ transitionDelay: `${i * 90}ms` }}
+              >
                 <div className="flex gap-1 text-gold">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <Star key={idx} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
                 <p className="mt-4 font-serif text-lg italic leading-relaxed text-foreground">"{t.text}"</p>
@@ -202,11 +269,17 @@ function HomePage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-border bg-background py-12">
+      <footer className="relative bg-background py-12">
+        <div className="absolute left-1/2 top-0 h-px w-full max-w-7xl -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
-          <Logo />
+          <Logo size={48} />
+          <nav className="flex gap-6 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            <a href="#planos" className="link-underline hover:text-gold">Planos</a>
+            <a href="#experiencia" className="link-underline hover:text-gold">Experiência</a>
+            <Link to="/login" className="link-underline hover:text-gold">Entrar</Link>
+          </nav>
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            © {new Date().getFullYear()} Nicolly Cinthia Nail Club
+            © {new Date().getFullYear()} Nicolly Cinthia
           </p>
         </div>
       </footer>
