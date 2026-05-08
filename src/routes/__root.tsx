@@ -10,6 +10,9 @@ import {
 
 import appCss from "../styles.css?url";
 
+import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/lib/auth-context";
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -72,16 +75,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Nicolly Cinthia Nail Club — Clube de Assinatura Premium" },
+      { name: "description", content: "Manicure e pedicure em domicílio com curadoria de uma experiência ultra premium. Vagas limitadas, atendimento exclusivo." },
+      { name: "author", content: "Nicolly Cinthia Nail Club" },
+      { property: "og:title", content: "Nicolly Cinthia Nail Club" },
+      { property: "og:description", content: "Clube de assinatura de manicure e pedicure em domicílio. Experiência premium, vagas limitadas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -113,7 +122,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <AuthProvider>
+        <Outlet />
+        <Toaster richColors position="top-center" />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
