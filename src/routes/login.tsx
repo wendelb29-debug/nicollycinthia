@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
@@ -46,64 +47,117 @@ function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background">
-      <div className="absolute inset-0 -z-10">
-        <img src={heroImage} alt="" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/85 to-background/70" />
-      </div>
+    <div className="min-h-screen bg-[#FAFAF8]">
+      <div className="grid min-h-screen lg:grid-cols-5">
+        {/* LEFT — luxury panel (desktop only) */}
+        <aside className="relative hidden overflow-hidden lg:col-span-3 lg:block">
+          <img
+            src={heroImage}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#F2C4CE]/40 via-[#E8D5C4]/55 to-[#C9A96E]/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
 
-      <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-16">
-        <Link to="/" className="self-start">
-          <Logo />
-        </Link>
-
-        <div className="animate-fade-up mt-12 rounded-3xl border border-border/60 bg-card/90 p-10 shadow-luxe backdrop-blur-xl">
-          <span className="text-xs uppercase tracking-[0.35em] text-gold">Acesso exclusivo</span>
-          <h1 className="mt-3 font-serif text-4xl">Bem-vinda de volta</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Entre para acessar seu clube.</p>
-
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
-              <Input
-                id="email"
-                type="email"
-                required
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-background/80"
-                placeholder="voce@exemplo.com"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
-              <Input
-                id="password"
-                type="password"
-                required
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12 bg-background/80"
-                placeholder="••••••••"
-              />
-            </div>
-
-            <Button type="submit" disabled={submitting} className="h-12 w-full bg-gradient-gold text-white shadow-gold hover:opacity-95">
-              {submitting ? "Entrando..." : "Entrar"}
-            </Button>
-          </form>
-
-          <div className="mt-8 flex items-center justify-between text-sm text-muted-foreground">
-            <button type="button" className="hover:text-gold" onClick={() => toast.info("Em breve. Por enquanto entre em contato pelo WhatsApp.")}>
-              Esqueci minha senha
-            </button>
-            <Link to="/signup" className="text-foreground hover:text-gold">
-              Quero fazer parte →
-            </Link>
+          <div className="relative z-10 flex h-full flex-col items-center justify-center px-12 text-center">
+            <Logo size={140} className="animate-fade-up" />
+            <p className="animate-fade-up-delay-1 mt-10 max-w-md font-serif text-2xl italic leading-snug text-foreground/90">
+              Um clube feito para mulheres que se cuidam com elegância.
+            </p>
+            <ul className="animate-fade-up-delay-2 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs uppercase tracking-[0.3em] text-foreground/70">
+              <li>✦ Atendimento em domicílio</li>
+              <li>✦ Apenas 20 vagas</li>
+              <li>✦ Experiência 5 estrelas</li>
+            </ul>
           </div>
-        </div>
+        </aside>
+
+        {/* RIGHT — form panel */}
+        <section className="relative flex min-h-screen items-center justify-center bg-[#FAFAF8] px-6 py-10 sm:px-10 lg:col-span-2">
+          {/* Back to site */}
+          <Link
+            to="/"
+            className="absolute left-6 top-6 inline-flex items-center gap-1.5 text-sm text-[#8B7355] transition-colors hover:text-gold"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Voltar ao site
+          </Link>
+
+          <div className="animate-fade-up w-full max-w-md" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.08)" }}>
+            <div className="rounded-3xl border border-[#EDE6DA] bg-white px-8 py-10 sm:px-10 sm:py-12">
+              {/* Mobile logo */}
+              <div className="mb-6 flex justify-center lg:hidden">
+                <Logo size={64} />
+              </div>
+              {/* Desktop logo, smaller */}
+              <div className="mb-6 hidden justify-center lg:flex">
+                <Logo size={56} />
+              </div>
+
+              {/* Decorative divider */}
+              <div className="gold-divider my-2">
+                <span className="rotate-45 text-[10px] tracking-widest">◆</span>
+              </div>
+
+              <div className="mt-6 text-center">
+                <span className="text-[11px] uppercase tracking-[0.4em] text-gold">Acesso exclusivo</span>
+                <h1 className="mt-3 font-serif text-4xl text-foreground">Bem-vinda de volta</h1>
+                <p className="mt-2 text-sm text-muted-foreground">Entre para acessar seu clube exclusivo.</p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-xs uppercase tracking-[0.2em] text-foreground/70">E-mail</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-12 border-[#E5DCC9] bg-white focus-visible:border-gold focus-visible:ring-gold/30"
+                    placeholder="voce@exemplo.com"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-xs uppercase tracking-[0.2em] text-foreground/70">Senha</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    required
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="h-12 border-[#E5DCC9] bg-white focus-visible:border-gold focus-visible:ring-gold/30"
+                    placeholder="••••••••"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-shimmer h-12 w-full text-white shadow-gold transition-transform hover:scale-[1.01]"
+                  style={{ background: "linear-gradient(135deg, #C9A96E, #B8935A)" }}
+                >
+                  {submitting ? "Entrando..." : "Entrar"}
+                </Button>
+              </form>
+
+              <div className="mt-8 flex items-center justify-between text-sm">
+                <button
+                  type="button"
+                  className="text-muted-foreground hover:text-gold"
+                  onClick={() => toast.info("Em breve. Por enquanto entre em contato pelo WhatsApp.")}
+                >
+                  Esqueci minha senha
+                </button>
+                <Link to="/signup" className="link-underline text-gold">
+                  Quero fazer parte →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

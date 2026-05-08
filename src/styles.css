@@ -160,4 +160,92 @@
   .animate-fade-up-delay-2 { animation: fade-up 0.8s var(--ease-luxe) 0.3s both; }
   .animate-fade-up-delay-3 { animation: fade-up 0.8s var(--ease-luxe) 0.45s both; }
   .animate-shimmer { animation: shimmer 3s ease-in-out infinite; }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 600ms var(--ease-luxe), transform 600ms var(--ease-luxe);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Pulsing gold border (badge) */
+  @keyframes pulse-border {
+    0%, 100% { border-color: color-mix(in oklab, var(--gold) 40%, transparent); box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 25%, transparent); }
+    50% { border-color: var(--gold); box-shadow: 0 0 0 6px color-mix(in oklab, var(--gold) 8%, transparent); }
+  }
+  .pulse-gold { animation: pulse-border 2.4s ease-in-out infinite; }
+
+  /* Word stagger for hero headline */
+  @keyframes word-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .word-rise > span {
+    display: inline-block;
+    opacity: 0;
+    animation: word-rise 0.7s var(--ease-luxe) forwards;
+  }
+
+  /* Shimmer sweep for CTA buttons */
+  .btn-shimmer { position: relative; overflow: hidden; isolation: isolate; }
+  .btn-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 700ms var(--ease-luxe);
+    pointer-events: none;
+  }
+  .btn-shimmer:hover::after { transform: translateX(120%); }
+
+  /* Animated underline link */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 300ms var(--ease-luxe);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Decorative gold separator with diamond */
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--gold);
+  }
+  .gold-divider::before,
+  .gold-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--gold) 60%, transparent), transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .word-rise > span, .pulse-gold, .animate-fade-up,
+  .animate-fade-up-delay-1, .animate-fade-up-delay-2, .animate-fade-up-delay-3 {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
