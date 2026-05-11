@@ -25,13 +25,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
       setSession(newSession);
       if (newSession?.user) {
-        // Defer role fetch to avoid deadlock
-        setTimeout(() => fetchRole(newSession.user.id), 0);
+        await fetchRole(newSession.user.id);
       } else {
         setRole(null);
+        setLoading(false);
       }
     });
 
@@ -56,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .limit(1)
       .maybeSingle();
     setRole((data?.role as AppRole) ?? null);
+    setLoading(false);
   };
 
   const signOut = async () => {
