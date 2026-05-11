@@ -15,6 +15,7 @@ import { Route as ClienteRouteImport } from './routes/cliente'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProfissionalAgendaRouteImport } from './routes/profissional.agenda'
 import { Route as ClienteDashboardRouteImport } from './routes/cliente.dashboard'
+import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminAssinantesRouteImport } from './routes/admin.assinantes'
 import { Route as AdminAgendaRouteImport } from './routes/admin.agenda'
@@ -49,6 +50,11 @@ const ClienteDashboardRoute = ClienteDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => ClienteRoute,
 } as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/admin/planos',
+  path: '/admin/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
   '/profissional/agenda': typeof ProfissionalAgendaRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
   '/profissional/agenda': typeof ProfissionalAgendaRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
   '/profissional/agenda': typeof ProfissionalAgendaRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/admin/agenda'
     | '/admin/assinantes'
     | '/admin/dashboard'
+    | '/admin/planos'
     | '/cliente/dashboard'
     | '/profissional/agenda'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/admin/agenda'
     | '/admin/assinantes'
     | '/admin/dashboard'
+    | '/admin/planos'
     | '/cliente/dashboard'
     | '/profissional/agenda'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/admin/agenda'
     | '/admin/assinantes'
     | '/admin/dashboard'
+    | '/admin/planos'
     | '/cliente/dashboard'
     | '/profissional/agenda'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   AdminAgendaRoute: typeof AdminAgendaRoute
   AdminAssinantesRoute: typeof AdminAssinantesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
   ProfissionalAgendaRoute: typeof ProfissionalAgendaRoute
 }
 
@@ -190,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClienteDashboardRouteImport
       parentRoute: typeof ClienteRoute
     }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/admin/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
@@ -233,6 +253,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAgendaRoute: AdminAgendaRoute,
   AdminAssinantesRoute: AdminAssinantesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
   ProfissionalAgendaRoute: ProfissionalAgendaRoute,
 }
 export const routeTree = rootRouteImport
