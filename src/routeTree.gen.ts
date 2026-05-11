@@ -17,6 +17,7 @@ import { Route as ProfissionalAgendaRouteImport } from './routes/profissional.ag
 import { Route as ClienteDashboardRouteImport } from './routes/cliente.dashboard'
 import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminAtendimentosRouteImport } from './routes/admin.atendimentos'
 import { Route as AdminAssinantesRouteImport } from './routes/admin.assinantes'
 import { Route as AdminAgendaRouteImport } from './routes/admin.agenda'
@@ -61,6 +62,11 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/admin/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/admin/configuracoes',
+  path: '/admin/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAtendimentosRoute = AdminAtendimentosRouteImport.update({
   id: '/admin/atendimentos',
   path: '/admin/atendimentos',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
   '/admin/atendimentos': typeof AdminAtendimentosRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
   '/admin/atendimentos': typeof AdminAtendimentosRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
   '/admin/atendimentos': typeof AdminAtendimentosRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/admin/agenda'
     | '/admin/assinantes'
     | '/admin/atendimentos'
+    | '/admin/configuracoes'
     | '/admin/dashboard'
     | '/admin/planos'
     | '/cliente/dashboard'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/admin/agenda'
     | '/admin/assinantes'
     | '/admin/atendimentos'
+    | '/admin/configuracoes'
     | '/admin/dashboard'
     | '/admin/planos'
     | '/cliente/dashboard'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/admin/agenda'
     | '/admin/assinantes'
     | '/admin/atendimentos'
+    | '/admin/configuracoes'
     | '/admin/dashboard'
     | '/admin/planos'
     | '/cliente/dashboard'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   AdminAgendaRoute: typeof AdminAgendaRoute
   AdminAssinantesRoute: typeof AdminAssinantesRoute
   AdminAtendimentosRoute: typeof AdminAtendimentosRoute
+  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   ProfissionalAgendaRoute: typeof ProfissionalAgendaRoute
@@ -230,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/admin/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/atendimentos': {
       id: '/admin/atendimentos'
       path: '/admin/atendimentos'
@@ -273,6 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAgendaRoute: AdminAgendaRoute,
   AdminAssinantesRoute: AdminAssinantesRoute,
   AdminAtendimentosRoute: AdminAtendimentosRoute,
+  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   ProfissionalAgendaRoute: ProfissionalAgendaRoute,
