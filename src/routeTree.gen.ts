@@ -17,6 +17,7 @@ import { Route as ProfissionalAgendaRouteImport } from './routes/profissional.ag
 import { Route as ClienteDashboardRouteImport } from './routes/cliente.dashboard'
 import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminAtendimentosRouteImport } from './routes/admin.atendimentos'
 import { Route as AdminAssinantesRouteImport } from './routes/admin.assinantes'
 import { Route as AdminAgendaRouteImport } from './routes/admin.agenda'
 
@@ -60,6 +61,11 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/admin/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAtendimentosRoute = AdminAtendimentosRouteImport.update({
+  id: '/admin/atendimentos',
+  path: '/admin/atendimentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAssinantesRoute = AdminAssinantesRouteImport.update({
   id: '/admin/assinantes',
   path: '/admin/assinantes',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
+  '/admin/atendimentos': typeof AdminAtendimentosRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
+  '/admin/atendimentos': typeof AdminAtendimentosRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/admin/agenda': typeof AdminAgendaRoute
   '/admin/assinantes': typeof AdminAssinantesRoute
+  '/admin/atendimentos': typeof AdminAtendimentosRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin/agenda'
     | '/admin/assinantes'
+    | '/admin/atendimentos'
     | '/admin/dashboard'
     | '/admin/planos'
     | '/cliente/dashboard'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin/agenda'
     | '/admin/assinantes'
+    | '/admin/atendimentos'
     | '/admin/dashboard'
     | '/admin/planos'
     | '/cliente/dashboard'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin/agenda'
     | '/admin/assinantes'
+    | '/admin/atendimentos'
     | '/admin/dashboard'
     | '/admin/planos'
     | '/cliente/dashboard'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   AdminAgendaRoute: typeof AdminAgendaRoute
   AdminAssinantesRoute: typeof AdminAssinantesRoute
+  AdminAtendimentosRoute: typeof AdminAtendimentosRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   ProfissionalAgendaRoute: typeof ProfissionalAgendaRoute
@@ -217,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/atendimentos': {
+      id: '/admin/atendimentos'
+      path: '/admin/atendimentos'
+      fullPath: '/admin/atendimentos'
+      preLoaderRoute: typeof AdminAtendimentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/assinantes': {
       id: '/admin/assinantes'
       path: '/admin/assinantes'
@@ -252,6 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   AdminAgendaRoute: AdminAgendaRoute,
   AdminAssinantesRoute: AdminAssinantesRoute,
+  AdminAtendimentosRoute: AdminAtendimentosRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   ProfissionalAgendaRoute: ProfissionalAgendaRoute,
