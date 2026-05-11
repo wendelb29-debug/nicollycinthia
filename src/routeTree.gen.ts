@@ -15,7 +15,12 @@ import { Route as ClienteRouteImport } from './routes/cliente'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProfissionalAgendaRouteImport } from './routes/profissional.agenda'
 import { Route as ClienteDashboardRouteImport } from './routes/cliente.dashboard'
+import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
+import { Route as AdminAtendimentosRouteImport } from './routes/admin.atendimentos'
+import { Route as AdminAssinantesRouteImport } from './routes/admin.assinantes'
+import { Route as AdminAgendaRouteImport } from './routes/admin.agenda'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -47,9 +52,34 @@ const ClienteDashboardRoute = ClienteDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => ClienteRoute,
 } as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/admin/planos',
+  path: '/admin/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/admin/configuracoes',
+  path: '/admin/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAtendimentosRoute = AdminAtendimentosRouteImport.update({
+  id: '/admin/atendimentos',
+  path: '/admin/atendimentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAssinantesRoute = AdminAssinantesRouteImport.update({
+  id: '/admin/assinantes',
+  path: '/admin/assinantes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAgendaRoute = AdminAgendaRouteImport.update({
+  id: '/admin/agenda',
+  path: '/admin/agenda',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -58,7 +88,12 @@ export interface FileRoutesByFullPath {
   '/cliente': typeof ClienteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin/agenda': typeof AdminAgendaRoute
+  '/admin/assinantes': typeof AdminAssinantesRoute
+  '/admin/atendimentos': typeof AdminAtendimentosRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
   '/profissional/agenda': typeof ProfissionalAgendaRoute
 }
@@ -67,7 +102,12 @@ export interface FileRoutesByTo {
   '/cliente': typeof ClienteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin/agenda': typeof AdminAgendaRoute
+  '/admin/assinantes': typeof AdminAssinantesRoute
+  '/admin/atendimentos': typeof AdminAtendimentosRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
   '/profissional/agenda': typeof ProfissionalAgendaRoute
 }
@@ -77,7 +117,12 @@ export interface FileRoutesById {
   '/cliente': typeof ClienteRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/admin/agenda': typeof AdminAgendaRoute
+  '/admin/assinantes': typeof AdminAssinantesRoute
+  '/admin/atendimentos': typeof AdminAtendimentosRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/planos': typeof AdminPlanosRoute
   '/cliente/dashboard': typeof ClienteDashboardRoute
   '/profissional/agenda': typeof ProfissionalAgendaRoute
 }
@@ -88,7 +133,12 @@ export interface FileRouteTypes {
     | '/cliente'
     | '/login'
     | '/signup'
+    | '/admin/agenda'
+    | '/admin/assinantes'
+    | '/admin/atendimentos'
+    | '/admin/configuracoes'
     | '/admin/dashboard'
+    | '/admin/planos'
     | '/cliente/dashboard'
     | '/profissional/agenda'
   fileRoutesByTo: FileRoutesByTo
@@ -97,7 +147,12 @@ export interface FileRouteTypes {
     | '/cliente'
     | '/login'
     | '/signup'
+    | '/admin/agenda'
+    | '/admin/assinantes'
+    | '/admin/atendimentos'
+    | '/admin/configuracoes'
     | '/admin/dashboard'
+    | '/admin/planos'
     | '/cliente/dashboard'
     | '/profissional/agenda'
   id:
@@ -106,7 +161,12 @@ export interface FileRouteTypes {
     | '/cliente'
     | '/login'
     | '/signup'
+    | '/admin/agenda'
+    | '/admin/assinantes'
+    | '/admin/atendimentos'
+    | '/admin/configuracoes'
     | '/admin/dashboard'
+    | '/admin/planos'
     | '/cliente/dashboard'
     | '/profissional/agenda'
   fileRoutesById: FileRoutesById
@@ -116,7 +176,12 @@ export interface RootRouteChildren {
   ClienteRoute: typeof ClienteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  AdminAgendaRoute: typeof AdminAgendaRoute
+  AdminAssinantesRoute: typeof AdminAssinantesRoute
+  AdminAtendimentosRoute: typeof AdminAtendimentosRoute
+  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
   ProfissionalAgendaRoute: typeof ProfissionalAgendaRoute
 }
 
@@ -164,11 +229,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClienteDashboardRouteImport
       parentRoute: typeof ClienteRoute
     }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/admin/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
       fullPath: '/admin/dashboard'
       preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/admin/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/atendimentos': {
+      id: '/admin/atendimentos'
+      path: '/admin/atendimentos'
+      fullPath: '/admin/atendimentos'
+      preLoaderRoute: typeof AdminAtendimentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/assinantes': {
+      id: '/admin/assinantes'
+      path: '/admin/assinantes'
+      fullPath: '/admin/assinantes'
+      preLoaderRoute: typeof AdminAssinantesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/agenda': {
+      id: '/admin/agenda'
+      path: '/admin/agenda'
+      fullPath: '/admin/agenda'
+      preLoaderRoute: typeof AdminAgendaRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -190,7 +290,12 @@ const rootRouteChildren: RootRouteChildren = {
   ClienteRoute: ClienteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  AdminAgendaRoute: AdminAgendaRoute,
+  AdminAssinantesRoute: AdminAssinantesRoute,
+  AdminAtendimentosRoute: AdminAtendimentosRoute,
+  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
   ProfissionalAgendaRoute: ProfissionalAgendaRoute,
 }
 export const routeTree = rootRouteImport
