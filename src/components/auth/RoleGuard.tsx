@@ -30,12 +30,14 @@ export function RoleGuard({ allow, children }: RoleGuardProps) {
     }
   }, [session, role, loading, allow, navigate]);
 
-  if (loading || !session || (role && role !== allow)) {
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="h-10 w-10 animate-shimmer rounded-full bg-gradient-gold" />
       </div>
     );
   }
+  if (!session) return null;
+  if (role && role !== allow) return null;
   return <>{children}</>;
 }
