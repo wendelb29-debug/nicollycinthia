@@ -27,7 +27,7 @@ async function loadSetting<T>(key: string): Promise<T | null> {
   return (data?.value as T) ?? null;
 }
 async function saveSetting(key: string, value: unknown) {
-  const { error } = await supabase.from("settings").upsert({ key, value });
+  const { error } = await supabase.from("settings").upsert({ key, value: value as never });
   if (error) throw error;
 }
 
