@@ -146,7 +146,23 @@ function LoginPage() {
                 </Button>
               </form>
 
-              <div className="mt-8 flex items-center justify-between text-sm">
+              <div className="relative my-6 flex items-center">
+                <span className="h-px flex-1 bg-[#EDE6DA]" />
+                <span className="px-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">ou</span>
+                <span className="h-px flex-1 bg-[#EDE6DA]" />
+              </div>
+
+              <Link to="/signup" className="block">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="h-12 w-full border-gold/60 text-gold hover:bg-gold/5 hover:text-gold"
+                >
+                  Inscrever-se no clube
+                </Button>
+              </Link>
+
+              <div className="mt-6 flex items-center justify-between text-sm">
                 <button
                   type="button"
                   className="text-muted-foreground hover:text-gold"
